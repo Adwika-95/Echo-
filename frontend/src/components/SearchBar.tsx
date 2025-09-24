@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
 import { Search, Mic } from 'lucide-react';
-
 interface SearchBarProps {
   onSearch: (mood: string) => void;
   isLoading: boolean;
 }
 const SearchBar: React.FC<SearchBarProps> = ({ onSearch, isLoading }) => {
   const [mood, setMood] = useState('');
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (mood.trim() && !isLoading) {
@@ -42,5 +40,4 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch, isLoading }) => {
     </div>
   );
 };
-
 export default SearchBar;

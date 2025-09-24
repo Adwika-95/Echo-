@@ -8,7 +8,6 @@ app.use(express.json());
 const PORT = process.env.PORT || 5000;
 let spotifyToken = null;
 let spotifyTokenExpiresAt = 0;
-
 async function getSpotifyToken() {
   if (spotifyToken && Date.now() < spotifyTokenExpiresAt - 60 * 1000) return spotifyToken;
   const resp = await axios.post(
@@ -26,7 +25,6 @@ async function getSpotifyToken() {
   spotifyTokenExpiresAt = Date.now() + resp.data.expires_in * 1000;
   return spotifyToken;
 }
-
 async function callGeminiExtract(promptText) {
   try {
     const url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=' + process.env.GEMINI_API_KEY;
@@ -38,7 +36,6 @@ async function callGeminiExtract(promptText) {
         }]
       }]
     };
-
     const r = await axios.post(url, body);
     const candidate = r.data?.candidates?.[0]?.content?.parts?.[0]?.text;
     console.log(`Gemini response: ${candidate}`);
@@ -49,7 +46,6 @@ async function callGeminiExtract(promptText) {
     return "pop,chill,ambient";
   }
 }
-
 app.post('/api/generate-playlist', async (req, res) => {
   try {
     const { prompt, limit = 20 } = req.body;
@@ -80,5 +76,4 @@ app.post('/api/generate-playlist', async (req, res) => {
     res.status(500).json({ error: 'Failed to generate playlist' });
   }
 });
-
 app.listen(PORT, () => console.log(`Backend running on http://localhost:${PORT}`));
