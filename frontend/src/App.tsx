@@ -4,33 +4,27 @@ import SearchBar from './components/SearchBar';
 import LoadingAnimation from './components/LoadingAnimation';
 import PlaylistCard, { Track } from './components/PlaylistCard';
 import MoodBackground from './components/MoodBackground';
-
 function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [results, setResults] = useState<Track[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [currentMood, setCurrentMood] = useState<string | null>(null);
-
   const handleSearch = async (mood: string) => {
     setIsLoading(true);
     setResults([]);
     setError(null);
     setCurrentMood(mood);
-
     try {
       const response = await fetch('http://localhost:5000/api/generate-playlist', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ prompt: mood }),
       });
-
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.error || 'Failed to fetch playlist.');
       }
-
       const data = await response.json();
-
       const tracks: Track[] = data.tracks.map((track: any) => ({
         id: track.id,
         title: track.title,
@@ -39,7 +33,6 @@ function App() {
         duration: track.duration,
         spotifyUrl: track.spotifyUrl,
       }));
-
       setResults(tracks);
     } catch (err: any) {
       setError(err.message);
@@ -50,26 +43,15 @@ function App() {
 
   return (
     <div className="App">
-      {/* Mood Background */}
       <MoodBackground mood={currentMood} />
-
-      {/* Heading */}
       <h1>🎵 Echo: Mood-Based Music</h1>
-
-      {/* Search Bar */}
       <SearchBar onSearch={handleSearch} isLoading={isLoading} />
-
-      {/* Loading Animation */}
       {isLoading && (
         <div className="loading-animation-overlay">
           <LoadingAnimation />
         </div>
       )}
-
-      {/* Error Message */}
       {error && <p className="error">{error}</p>}
-
-      {/* Playlist Grid */}
       {!isLoading && results.length > 0 && (
         <div className="results-container">
           {results.map((track) => (

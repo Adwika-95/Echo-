@@ -6,7 +6,6 @@ body {
   background-color: #121212;
   color: #ffffff;
 }
-
 .App {
   text-align: center;
   padding: 2rem;
@@ -17,8 +16,6 @@ body {
   justify-content: flex-start;
   background: linear-gradient(135deg, #121212, #1c1c1c);
 }
-
-/* ================== Header ================== */
 h1 {
   color: #1DB954;
   margin-bottom: 3rem;
@@ -30,15 +27,12 @@ h1 {
   justify-content: center;
   text-shadow: 0px 0px 12px #1DB95455;
 }
-
-/* ================== Search Bar ================== */
 .fixed {
   position: relative;
   width: 100%;
   max-width: 500px;
   margin: 0 auto 2rem auto;
 }
-
 .fixed form {
   display: flex;
   align-items: center;
@@ -48,11 +42,9 @@ h1 {
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
   transition: all 0.3s ease;
 }
-
 .fixed form:hover {
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7);
 }
-
 .fixed input[type="text"] {
   flex: 1;
   padding: 0.7rem 1rem;
@@ -64,11 +56,9 @@ h1 {
   outline: none;
   margin-right: 0.5rem;
 }
-
 .fixed input::placeholder {
   color: #b3b3b3;
 }
-
 .fixed button {
   padding: 0.6rem 1.2rem;
   background-color: #1DB954;
@@ -79,21 +69,17 @@ h1 {
   cursor: pointer;
   transition: all 0.3s ease;
 }
-
 .fixed button:hover {
   background-color: #1ed760;
   transform: scale(1.05);
 }
-
 .fixed svg {
   margin-right: 0.5rem;
   color: #b3b3b3;
 }
-
-/* ================== Playlist Grid ================== */
 .results-container {
   display: grid;
-  grid-template-columns: repeat(4, 1fr); /* 4 cards per row */
+  grid-template-columns: repeat(4, 1fr);
   gap: 20px;
   width: 100%;
   max-width: 1000px;
@@ -101,22 +87,16 @@ h1 {
   padding: 0 1rem;
   justify-items: center;
 }
-
-/* ================== Loading & Error ================== */
 .loading, .error {
   margin-top: 2rem;
   font-size: 1.2rem;
 }
-
 .loading {
   color: #1DB954;
 }
-
 .error {
   color: #FF6347;
 }
-
-/* ================== Loading Animation Overlay ================== */
 .loading-animation-overlay {
   position: fixed;
   inset: 0;
@@ -126,11 +106,9 @@ h1 {
   align-items: center;
   justify-content: center;
 }
-/* Add this to index.css */
 .playlist-card-wrapper {
   width: 160px;
 }
-/* ================== Mood Background ================== */
 .mood-bg {
   position: fixed;
   inset: 0;
