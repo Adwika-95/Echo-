@@ -1,24 +1,26 @@
-// frontend/src/App.tsx
 import React, { useState } from 'react';
-import './App.css';
+import './index.css';
 import SearchBar from './components/SearchBar';
+import LoadingAnimation from './components/LoadingAnimation';
+import PlaylistCard, { Track } from './components/PlaylistCard';
+import MoodBackground from './components/MoodBackground';
 
 function App() {
   const [isLoading, setIsLoading] = useState(false);
-  const [results, setResults] = useState<string[]>([]);
+  const [results, setResults] = useState<Track[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const [currentMood, setCurrentMood] = useState<string | null>(null);
 
   const handleSearch = async (mood: string) => {
     setIsLoading(true);
     setResults([]);
-    setError(null); // Clear any previous errors
-    
+    setError(null);
+    setCurrentMood(mood);
+
     try {
       const response = await fetch('http://localhost:5000/api/generate-playlist', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ prompt: mood }),
       });
 
@@ -28,16 +30,19 @@ function App() {
       }
 
       const data = await response.json();
-      console.log('API Response:', data); // Log the response to see the tracks
-      
-      // Update the state with the track titles
-      const trackTitles = data.tracks.map((track: any) => `${track.title} by ${track.artist}`);
-      setResults(trackTitles);
 
+      const tracks: Track[] = data.tracks.map((track: any) => ({
+        id: track.id,
+        title: track.title,
+        artist: track.artist,
+        albumCover: track.albumCover || 'https://via.placeholder.com/200',
+        duration: track.duration,
+        spotifyUrl: track.spotifyUrl,
+      }));
+
+      setResults(tracks);
     } catch (err: any) {
-      console.error('Error generating playlist:', err);
       setError(err.message);
-      
     } finally {
       setIsLoading(false);
     }
@@ -45,19 +50,34 @@ function App() {
 
   return (
     <div className="App">
+      {/* Mood Background */}
+      <MoodBackground mood={currentMood} />
+
+      {/* Heading */}
       <h1>🎵 Echo: Mood-Based Music</h1>
+
+      {/* Search Bar */}
       <SearchBar onSearch={handleSearch} isLoading={isLoading} />
 
-      {isLoading && <p className="loading">Fetching songs...</p>}
-      
+      {/* Loading Animation */}
+      {isLoading && (
+        <div className="loading-animation-overlay">
+          <LoadingAnimation />
+        </div>
+      )}
+
+      {/* Error Message */}
       {error && <p className="error">{error}</p>}
 
+      {/* Playlist Grid */}
       {!isLoading && results.length > 0 && (
-        <ul className="results-list">
-          {results.map((song, index) => (
-            <li key={index}>{song}</li>
+        <div className="results-container">
+          {results.map((track) => (
+            <div key={track.id} className="playlist-card-wrapper">
+              <PlaylistCard track={track} />
+            </div>
           ))}
-        </ul>
+        </div>
       )}
     </div>
   );
