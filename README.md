@@ -1,4 +1,4 @@
-Echo – AI Mood-Based Playlist Generator
+Echo:AI Mood-Based Playlist Generator
 Project Overview
 Music enhances our daily lives, but finding the perfect playlist for a specific mood or activity can be time-consuming. **ECHO**  leverages AI to instantly generate personalized playlists based on natural language mood descriptions, providing a seamless music discovery experience.
 ## Objective
