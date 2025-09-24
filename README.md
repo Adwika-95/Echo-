@@ -15,7 +15,7 @@ Create an intuitive web application using **Gemini AI** to interpret mood-based 
 ## Setup Instructions
 1. Clone the repository:  
    ```bash
-   git clone <your-repo-url>
+   git clone https://github.com/Adwika-95/Echo-.git
 **Configure APIs**:
 Spotify API:
 Create a Spotify Developer account and generate a Client ID and Client Secret.
